@@ -16,6 +16,7 @@ public class Lakas extends Epulet {
     private ImageIcon image;
     private int lakokSzama;
     private ArrayList<Lako> lakok;
+    private boolean rendelesreVar;
 
     public Lakas(int lakokSzama) throws Exception {
         this.lakok = new ArrayList<>();
@@ -46,11 +47,17 @@ public class Lakas extends Epulet {
         this.image = new ImageIcon(imageB);
 
         this.lakokSzama = lakokSzama;
-
+        this.rendelesreVar = false;
 
     }
 
+    public boolean isRendelesreVar() {
+        return rendelesreVar;
+    }
 
+    public void setRendelesreVar(boolean rendelesreVar) {
+        this.rendelesreVar = rendelesreVar;
+    }
 
     @Override
     public int getPoz() {

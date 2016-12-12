@@ -169,7 +169,8 @@ try{
 
     public void inditSzallitas() {
 
-        if (pizzeria.getSzallitasraKesz().getMeret() != 0) {
+        if (pizzeria.getSzallitasraKesz().getMeret() != 0 && this.felvettRendeles == false) {
+            System.out.println(pizzeria.getSzallitasraKesz());
             while (felvettRendeles == false) {
                 this.setKezdoPont();
                 this.setVisible(true);
@@ -190,10 +191,9 @@ try{
                     i--;
 
                 }
-                            this.menjHaza(this.getPizzeria().getPoz());
-            this.setVisible(false);
             }
-
+            this.menjHaza(this.getPizzeria().getPoz());
+            this.setVisible(false);
         }
 
     }
@@ -243,7 +243,7 @@ try{
         do {
             if ( 30 > this.getJelenlegiUzemanyag()/this.fogyasztas) {
                 this.tankol();
-            }
+            } else {
                 // Ha elosztom 15-el és maradékos osztás 15 ha páros ----> mehet fel-le!!!!
                 boolean vertikalis = false;
                 boolean horizontalis = false;
@@ -279,9 +279,9 @@ try{
                 if (!kesz && !vertikalis && !horizontalis) {
                     this.moveLeft();
                 }
-
+            }
         } while (!kesz);
-        rendeles.getLako().setRendelesreVar(false);
+        rendeles.getLako().getLakohely().setRendelesreVar(false);
         this.pizzeria.setKiszallitottPizzak(this.pizzeria.getKiszallitottPizzak() + 1);
         szallitasAlatt.removeRendeles(rendeles);
         pizzeria.getSzallitasAlatt().removeRendeles(rendeles);

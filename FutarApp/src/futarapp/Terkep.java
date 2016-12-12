@@ -20,7 +20,7 @@ public class Terkep {
         JPanel TerkepCont = new JPanel();
         JPanel container = new JPanel();
         container.setLayout(new GridLayout(1, 2));
-        Terkep.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        Terkep.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         Auto auto = new Auto("Opel", "Astra");
         Terkep.setGlassPane(auto);
         Terkep.add(container);
@@ -200,7 +200,7 @@ public class Terkep {
                                 if (RendelesRand <= lakasok.getLakas(i).getLakok().get(j).getPizzaSzeretet()) {
 
                                     Rendeles ujRendeles = new Rendeles(lakasok.getLakas(i).getHazszam(), lakasok.getLakas(i).getLakok().get(j));
-                                    lakasok.getLakas(i).getLako(j).setRendelesreVar(true);
+                                    lakasok.getLakas(i).setRendelesreVar(true);
                                     ujRendeles.addEtel(pizzeria.getMenu().get((int) (Math.random() * pizzeria.getMenu().size())));
                                     pizzeria.getElkeszitesreVaro().addRendeles(ujRendeles);
                                 }
@@ -209,8 +209,8 @@ public class Terkep {
                                 felulet.Textarea4(pizzeria.getSzallitasraKesz());
                                 felulet.Textarea3(pizzeria.getSzallitasAlatt());
                                 felulet.JLabel5(pizzeria.getKiszallitottPizzak());
-                                felulet.JLabel7(auto);//1000
-                                Thread.sleep(100);
+                                felulet.JLabel7(auto);
+                                Thread.sleep(1000);
                             }
                         }
 
@@ -232,29 +232,21 @@ public class Terkep {
             }
         });
         t3.start();
-        
-
 
         Thread t4 = new Thread(new Runnable() {
             public void run() {
                 for (;;) {
                     for (int i = 0; i < lakasok.getMeret(); i++) {
-                        boolean var = false;
-                        for (int j = 0; j < lakasok.getLakas(i).getLakokSzama(); j++) {
-                            if (lakasok.getLakas(i).getLako(j).isRendelesreVar()==true) {
-                                var = true;
-                            }
-                        }
-                        if (var) {
+                        if (lakasok.getLakas(i).isRendelesreVar()) {
                             TerkepCont.getComponent(lakasok.getLakas(i).getPoz()).setBackground(Color.red);
-
+                            Terkep.repaint();
                         } else {
-                            TerkepCont.getComponent(lakasok.getLakas(i).getPoz()).setBackground(Color.white);
-
+                            TerkepCont.getComponent(lakasok.getLakas(i).getPoz()).setBackground(Color.WHITE);
                         }
+                        Terkep.repaint();
                     }
-                    try {//1000
-                        Thread.sleep(500);
+                    try {
+                        Thread.sleep(1000);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
@@ -268,8 +260,8 @@ public class Terkep {
             public void run() {
                 for (;;) {
                     auto.inditSzallitas();
-                    try {//500
-                        Thread.sleep(200);
+                    try {
+                        Thread.sleep(500);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
