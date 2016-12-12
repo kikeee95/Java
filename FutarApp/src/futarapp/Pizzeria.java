@@ -41,8 +41,8 @@ public class Pizzeria extends Epulet {
     public void keszitEtel() {
 
         try {
-            sutobeTesz();
-            Thread.sleep(15000);
+            sutobeTesz();//15000
+            Thread.sleep(5000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Pizzeria.class.getName()).log(Level.SEVERE, null, ex);
         }
