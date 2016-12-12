@@ -13,7 +13,7 @@ import javax.swing.Timer;
 
 public class Auto extends Jarmu {
 
-    private BufferedImage image;
+    private BufferedImage imageS;
     private int x = 0, y = 0;
     private String imageFile = "car.png";
     private String imageTop = "carTop.png";
