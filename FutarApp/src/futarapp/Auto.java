@@ -15,11 +15,11 @@ public class Auto extends Jarmu {
 
     private BufferedImage image;
     private int x = 0, y = 0;
-    private String imageFile = "car.png";
-    private String imageTop = "carTop.png";
-    private String imageBot = "carBot.png";
-    private String imageLeft = "carLeft.png";
-    private String imageRight = "carRight.png";
+    private String imageFile = "carleft_1.png";
+    private String imageTop = "cartop_1.png";
+    private String imageBot = "carbot_1.png";
+    private String imageLeft = "carleft_1.png";
+    private String imageRight = "carright_1.png";
     private String marka;
     private String tipus;
     private int rakter;
@@ -62,7 +62,7 @@ try{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, x, y, null);
+        g.drawImage(image, x, y,this.getSegedWidht(),this.getSegedHeight(), null);
     }
 
     @Override
@@ -84,7 +84,7 @@ try{
                 Logger.getLogger(Auto.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        this.position += 15;
+        this.position += Grid.OSZLOP;
     }
 
     @Override
@@ -106,7 +106,7 @@ try{
                 ex.printStackTrace();
             }
         }
-        this.position -= 15;
+        this.position -= Grid.OSZLOP;
     }
 
     @Override
@@ -203,30 +203,30 @@ try{
     public void menjHaza(int poz) {
         boolean kesz = false;
         do {
-            // Ha elosztom 15-el és maradékos osztás 15 ha páros ----> mehet fel-le!!!!
+            // Ha elosztom protected-el és maradékos osztás protected ha páros ----> mehet fel-le!!!!
             boolean vertikalis = false;
             boolean horizontalis = false;
-            if ((this.position % 15) % 2 == 0) {
-                if (this.position / 15 <= poz / 15) {
+            if ((this.position % Grid.OSZLOP) % 2 == 0) {
+                if (this.position / Grid.OSZLOP <= poz / Grid.OSZLOP) {
                     this.moveDown();
                     vertikalis = true;
-                } else if (this.position / 15 > (poz / 15) + 1) {
+                } else if (this.position / Grid.OSZLOP > (poz / Grid.OSZLOP) + 1) {
                     this.moveUp();
                     vertikalis = true;
                 }
             }
 
             if (!vertikalis) {
-                if (this.position % 15 > poz % 15) {
+                if (this.position % Grid.OSZLOP > poz % Grid.OSZLOP) {
                     this.moveLeft();
                     horizontalis = true;
-                } else if (this.position % 15 < poz % 15) {
+                } else if (this.position % Grid.OSZLOP < poz % Grid.OSZLOP) {
                     this.moveRight();
                     horizontalis = true;
                 }
             }
 
-            if (this.position + 15 == poz || this.position - 15 == poz) {
+            if (this.position + Grid.OSZLOP == poz || this.position - Grid.OSZLOP == poz) {
                 this.felvettRendeles = false;
                 kesz = true;
             }
@@ -246,30 +246,30 @@ try{
             if ( 30 > this.getJelenlegiUzemanyag()/this.fogyasztas) {
                 this.tankol();
             }
-                // Ha elosztom 15-el és maradékos osztás 15 ha páros ----> mehet fel-le!!!!
+                // Ha elosztom protected-el és maradékos osztás protected ha páros ----> mehet fel-le!!!!
                 boolean vertikalis = false;
                 boolean horizontalis = false;
-                if ((this.position % 15) % 2 == 0) {
-                    if (this.position / 15 <= poz / 15) {
+                if ((this.position % Grid.OSZLOP) % 2 == 0) {
+                    if (this.position / Grid.OSZLOP <= poz / Grid.OSZLOP) {
                         this.moveDown();
                         vertikalis = true;
-                    } else if (this.position / 15 > (poz / 15) + 1) {
+                    } else if (this.position / Grid.OSZLOP > (poz / Grid.OSZLOP) + 1) {
                         this.moveUp();
                         vertikalis = true;
                     }
                 }
 
                 if (!vertikalis) {
-                    if (this.position % 15 > poz % 15) {
+                    if (this.position % Grid.OSZLOP > poz % Grid.OSZLOP) {
                         this.moveLeft();
                         horizontalis = true;
-                    } else if (this.position % 15 < poz % 15) {
+                    } else if (this.position % Grid.OSZLOP < poz % Grid.OSZLOP) {
                         this.moveRight();
                         horizontalis = true;
                     }
                 }
 
-                if (this.position + 15 == poz || this.position - 15 == poz) {
+                if (this.position + Grid.OSZLOP == poz || this.position - Grid.OSZLOP == poz) {
                     kesz = true;
                     try {
                         Thread.sleep(2000);
@@ -319,15 +319,15 @@ try{
 
     private int getTav(Benzinkut benzinkut) {
         int tav = 0;
-        tav += Math.abs(this.position - benzinkut.getPoz()) / 15;
-        tav += Math.abs(this.position - benzinkut.getPoz()) % 15;
+        tav += Math.abs(this.position - benzinkut.getPoz()) / Grid.OSZLOP;
+        tav += Math.abs(this.position - benzinkut.getPoz()) % Grid.OSZLOP;
         return tav;
     }
 
     private int getTav(Rendeles rendeles) {
         int tav = 0;
-        tav += Math.abs(this.position - rendeles.getLako().getLakohely().getPoz()) / 15;
-        tav += Math.abs(this.position - rendeles.getLako().getLakohely().getPoz()) % 15;
+        tav += Math.abs(this.position - rendeles.getLako().getLakohely().getPoz()) / Grid.OSZLOP;
+        tav += Math.abs(this.position - rendeles.getLako().getLakohely().getPoz()) % Grid.OSZLOP;
         return tav;
 
     }
@@ -360,11 +360,11 @@ try{
 
     private void setKezdoPont() {
         int seged = this.pizzeria.getPoz();
-        int Yeltol = seged / 15 + 1;
-        int Xeltol = seged % 15;
+        int Yeltol = seged / Grid.OSZLOP + 1;
+        int Xeltol = seged % Grid.OSZLOP;
         this.x = Xeltol * this.getSegedWidht();
         this.y = Yeltol * this.getSegedHeight();
-        this.position = this.pizzeria.getPoz() + 15;
+        this.position = this.pizzeria.getPoz() + Grid.OSZLOP;
     }
 
     public Benzinkutak getBenzinkutak() {

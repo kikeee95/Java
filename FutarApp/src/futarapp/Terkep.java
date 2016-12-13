@@ -1,6 +1,7 @@
 package futarapp;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Date;
@@ -27,7 +28,7 @@ public class Terkep {
         container.add(TerkepCont, 0);
         Interface felulet = new Interface();
         container.add(felulet, 1);
-        TerkepCont.setLayout(new GridLayout(15, 16));
+        TerkepCont.setLayout(new GridLayout(Grid.SOR, Grid.OSZLOP));
         Terkep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Pizzeria pizzeria = new Pizzeria();
@@ -62,25 +63,25 @@ public class Terkep {
             System.exit(1);
         }
 
-        int pizzeriaSzam = (int) (Math.random() * 50);
+        int pizzeriaSzam = (int) (Math.random() * ((Grid.SOR/2*Grid.OSZLOP))/2);
         int randomSzam;
         do {
-            randomSzam = (int) (Math.random() * 50);
+            randomSzam = (int) (Math.random() *((Grid.SOR/2*Grid.OSZLOP))/2);
         } while (randomSzam == pizzeriaSzam);
         int BenzinkutSzam = randomSzam;
-
+        
         try {
             int lakasdarab = 1;
-            for (int i = 0; i < 15; i++) {
-                for (int j = 0; j < 15; j++) {
+            for (int i = 0; i < Grid.SOR; i++) {
+                for (int j = 0; j < Grid.OSZLOP; j++) {
                     if (i % 2 == 0 || j % 2 == 0) {
                         JPanel panelblock = new JPanel();
                         panelblock.setOpaque(true);
                         panelblock.setBackground(Color.GRAY);
-                        TerkepCont.add(panelblock, i * 15 + j);
+                        TerkepCont.add(panelblock, i * Grid.OSZLOP + j);
                     } else if (lakasdarab == pizzeriaSzam) {
                         pizzeria.setHazszam(lakasdarab);
-                        pizzeria.setPoz(i * 15 + j);
+                        pizzeria.setPoz(i * Grid.OSZLOP + j);
                         JLabel thumb = new JLabel();
                         thumb.setText("" + lakasdarab);
                         thumb.setHorizontalAlignment(JLabel.CENTER);
@@ -89,11 +90,11 @@ public class Terkep {
                         thumb.setHorizontalAlignment(JLabel.CENTER);
                         thumb.setBackground(Color.WHITE);
                         thumb.setIcon(pizzeria.getImage());
-                        TerkepCont.add(thumb, i * 15 + j);
+                        TerkepCont.add(thumb, i * Grid.OSZLOP + j);
                         lakasdarab++;
                     } else if (lakasdarab == BenzinkutSzam) {
                         benzinkut.setHazszam(lakasdarab);
-                        benzinkut.setPoz(i * 15 + j);
+                        benzinkut.setPoz(i * Grid.OSZLOP + j);
                         JLabel thumb = new JLabel();
                         thumb.setText("" + lakasdarab);
                         thumb.setHorizontalAlignment(JLabel.CENTER);
@@ -102,7 +103,7 @@ public class Terkep {
                         thumb.setHorizontalAlignment(JLabel.CENTER);
                         thumb.setBackground(Color.WHITE);
                         thumb.setIcon(benzinkut.getImage());
-                        TerkepCont.add(thumb, i * 15 + j);
+                        TerkepCont.add(thumb, i * Grid.OSZLOP + j);
                         benzinkutak.addBenzinkut(benzinkut);
                         lakasdarab++;
                     } else {
@@ -116,10 +117,10 @@ public class Terkep {
                         thumb.setVerticalTextPosition(JLabel.BOTTOM);
                         thumb.setBackground(Color.WHITE);
                         thumb.setOpaque(true);
+                        TerkepCont.add(thumb, i * Grid.OSZLOP + j);
                         thumb.setIcon(lakas.getImage());
-                        TerkepCont.add(thumb, i * 15 + j);
                         lakasdarab++;
-                        lakas.setPoz(i * 15 + j);
+                        lakas.setPoz(i * Grid.OSZLOP + j);
                         int eddigiLakok = 0;
                         do {
                             int keresztSzam = (int) (Math.random() * 24);
@@ -181,7 +182,7 @@ public class Terkep {
                     JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
-
+        Terkep.setVisible(true);
         pizzeria.addJarmu(auto);
         auto.setPizzeria(pizzeria);
         auto.setBenzinkutak(benzinkutak);
@@ -190,7 +191,7 @@ public class Terkep {
 
         auto.setOpaque(false);
 
-        Terkep.setVisible(true);
+    
             auto.setSegedWidht(TerkepCont.getComponent(2).getWidth());
         auto.setSegedHeight(TerkepCont.getComponent(2).getHeight());
 
@@ -251,7 +252,6 @@ public class Terkep {
                         }
                         if (var) {
                             TerkepCont.getComponent(lakasok.getLakas(i).getPoz()).setBackground(Color.red);
-
                         } else {
                             TerkepCont.getComponent(lakasok.getLakas(i).getPoz()).setBackground(Color.white);
 

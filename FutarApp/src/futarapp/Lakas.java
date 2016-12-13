@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class Lakas extends Epulet {
@@ -17,12 +16,13 @@ public class Lakas extends Epulet {
     private int lakokSzama;
     private ArrayList<Lako> lakok;
 
+
     public Lakas(int lakokSzama) throws Exception {
         this.lakok = new ArrayList<>();
         this.tipus = EpuletTipus.Lakas;
         if (lakokSzama > 4) {
             try {
-                imageFile = "house-icon.png";
+                imageFile = "houseScale.png";
                 String ut = this.imageFile;
                 imageB = ImageIO.read(new File(ut));
             } catch (Exception e) {
@@ -105,5 +105,17 @@ public class Lakas extends Epulet {
     public void setHazszam(int hazSzam) {
         this.hazszam = hazSzam;
     }
+
+    public BufferedImage getImageB() {
+        return imageB;
+    }
+
+    public void setImageB(BufferedImage imageB) {
+        this.imageB = imageB;
+    }
+    
+    
+    
+    
 
 }
