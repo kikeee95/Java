@@ -23,15 +23,15 @@ public class Terkep {
         container.setLayout(new GridLayout(1, 2));
         Terkep.setExtendedState(JFrame.MAXIMIZED_BOTH);
         Auto auto = new Auto("Opel", "Astra");
-        Terkep.setGlassPane(auto);
+        Moped moped = new Moped("s", "s");
+        JPanel Glass = new JPanel();
+        Terkep.setGlassPane(Glass);
         Terkep.add(container);
         container.add(TerkepCont, 0);
         Interface felulet = new Interface();
         container.add(felulet, 1);
         TerkepCont.setLayout(new GridLayout(Grid.SOR, Grid.OSZLOP));
         Terkep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        
 
         Pizzeria pizzeria = new Pizzeria();
         Benzinkut benzinkut = new Benzinkut(340, 355);
@@ -65,27 +65,27 @@ public class Terkep {
             System.exit(1);
         }
 
-        int pizzeriaSzam = (int) (Math.random() * ((Grid.SOR/2*Grid.OSZLOP))/2);
+        int pizzeriaSzam = (int) (Math.random() * ((Grid.SOR / 2 * Grid.OSZLOP)) / 2);
         int randomSzam;
         do {
-            randomSzam = (int) (Math.random() *((Grid.SOR/2*Grid.OSZLOP))/2);
+            randomSzam = (int) (Math.random() * ((Grid.SOR / 2 * Grid.OSZLOP)) / 2);
         } while (randomSzam == pizzeriaSzam);
         int BenzinkutSzam = randomSzam;
-        
+
         for (int i = 0; i < Grid.SOR; i++) {
-                for (int j = 0; j < Grid.OSZLOP; j++) {
-                        JPanel panelblock = new JPanel();
-                        panelblock.setOpaque(true);
-                        panelblock.setBackground(Color.GRAY);
-                        TerkepCont.add(panelblock, i * Grid.OSZLOP + j);
-                }
+            for (int j = 0; j < Grid.OSZLOP; j++) {
+                JPanel panelblock = new JPanel();
+                panelblock.setOpaque(true);
+                panelblock.setBackground(Color.GRAY);
+                TerkepCont.add(panelblock, i * Grid.OSZLOP + j);
+            }
         }
         Terkep.setVisible(true);
         int segedWidth = TerkepCont.getComponent(0).getWidth();
         int segedHeight = TerkepCont.getComponent(0).getHeight();
         TerkepCont.removeAll();
         Terkep.setVisible(false);
-        
+
         try {
             int lakasdarab = 1;
             for (int i = 0; i < Grid.SOR; i++) {
@@ -105,9 +105,9 @@ public class Terkep {
                         thumb.setVerticalTextPosition(JLabel.BOTTOM);
                         thumb.setHorizontalAlignment(JLabel.CENTER);
                         thumb.setBackground(Color.WHITE);
-                             BufferedImage scaled = pizzeria.getImageB();
+                        BufferedImage scaled = pizzeria.getImageB();
                         TerkepCont.add(thumb, i * Grid.OSZLOP + j);
-                        thumb.setIcon(new ImageIcon(scaled.getScaledInstance((int) (segedWidth*0.75), (int) (segedHeight*0.75), 0)));
+                        thumb.setIcon(new ImageIcon(scaled.getScaledInstance((int) (segedWidth * 0.75), (int) (segedHeight * 0.75), 0)));
                         TerkepCont.add(thumb, i * Grid.OSZLOP + j);
                         lakasdarab++;
                     } else if (lakasdarab == BenzinkutSzam) {
@@ -120,14 +120,14 @@ public class Terkep {
                         thumb.setVerticalTextPosition(JLabel.BOTTOM);
                         thumb.setHorizontalAlignment(JLabel.CENTER);
                         thumb.setBackground(Color.WHITE);
-                             BufferedImage scaled = benzinkut.getImageB();
+                        BufferedImage scaled = benzinkut.getImageB();
                         TerkepCont.add(thumb, i * Grid.OSZLOP + j);
-                        thumb.setIcon(new ImageIcon(scaled.getScaledInstance((int) (segedWidth*0.75), (int) (segedHeight*0.75), 0)));
+                        thumb.setIcon(new ImageIcon(scaled.getScaledInstance((int) (segedWidth * 0.75), (int) (segedHeight * 0.75), 0)));
                         TerkepCont.add(thumb, i * Grid.OSZLOP + j);
                         benzinkutak.addBenzinkut(benzinkut);
                         lakasdarab++;
                     } else {
-                        System.out.println("MÉRET"+ TerkepCont.getComponent(0).getHeight());
+                        System.out.println("MÉRET" + TerkepCont.getComponent(0).getHeight());
                         int lakokSzama = (int) (Math.random() * 15);
                         Lakas lakas = new Lakas(lakokSzama);
                         lakas.setHazszam(lakasdarab);
@@ -140,7 +140,7 @@ public class Terkep {
                         thumb.setOpaque(true);
                         BufferedImage scaled = lakas.getImageB();
                         TerkepCont.add(thumb, i * Grid.OSZLOP + j);
-                        thumb.setIcon(new ImageIcon(scaled.getScaledInstance((int) (segedWidth*0.75), (int) (segedHeight*0.75), 0)));
+                        thumb.setIcon(new ImageIcon(scaled.getScaledInstance((int) (segedWidth * 0.75), (int) (segedHeight * 0.75), 0)));
                         lakasdarab++;
                         lakas.setPoz(i * Grid.OSZLOP + j);
                         int eddigiLakok = 0;
@@ -204,18 +204,32 @@ public class Terkep {
                     JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
+       Glass.add(moped);
+       Glass.add(auto);
+        Glass.setLayout(new OverlayLayout(Glass));
+
+
+               Terkep.setGlassPane(Glass);
+
+
+       Glass.setVisible(true);
+       auto.setVisible(false);
+       moped.setVisible(false);
+       Glass.setOpaque(false);
         Terkep.setVisible(true);
+        pizzeria.addJarmu(moped);
+        moped.setPizzeria(pizzeria);
+        moped.setBenzinkutak(benzinkutak);
         pizzeria.addJarmu(auto);
         auto.setPizzeria(pizzeria);
         auto.setBenzinkutak(benzinkutak);
-        
-    
-
         auto.setOpaque(false);
+        moped.setOpaque(false);
 
-    
-            auto.setSegedWidht(TerkepCont.getComponent(2).getWidth());
+        auto.setSegedWidht(TerkepCont.getComponent(2).getWidth());
         auto.setSegedHeight(TerkepCont.getComponent(2).getHeight());
+        moped.setSegedWidht(TerkepCont.getComponent(2).getWidth());
+        moped.setSegedHeight(TerkepCont.getComponent(2).getHeight());
 
         Thread t1 = new Thread(new Runnable() {
             public void run() {
@@ -237,6 +251,8 @@ public class Terkep {
                                 felulet.Textarea3(pizzeria.getSzallitasAlatt());
                                 felulet.JLabel5(pizzeria.getKiszallitottPizzak());
                                 felulet.JLabel7(auto);//1000
+                                                    Glass.repaint();
+
                                 Thread.sleep(100);
                             }
                         }
@@ -259,8 +275,6 @@ public class Terkep {
             }
         });
         t3.start();
-        
-
 
         Thread t4 = new Thread(new Runnable() {
             public void run() {
@@ -268,7 +282,7 @@ public class Terkep {
                     for (int i = 0; i < lakasok.getMeret(); i++) {
                         boolean var = false;
                         for (int j = 0; j < lakasok.getLakas(i).getLakokSzama(); j++) {
-                            if (lakasok.getLakas(i).getLako(j).isRendelesreVar()==true) {
+                            if (lakasok.getLakas(i).getLako(j).isRendelesreVar() == true) {
                                 var = true;
                             }
                         }
@@ -290,13 +304,16 @@ public class Terkep {
         });
         t4.start();
         
+
+
         Thread t2 = new Thread(new Runnable() {
 
             public void run() {
                 for (;;) {
-                    auto.inditSzallitas();
                     try {//500
-                        Thread.sleep(200);
+                        Thread.sleep(2000);
+                                            auto.inditSzallitas();
+
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
@@ -305,6 +322,21 @@ public class Terkep {
         });
         t2.start();
         
+             Thread t5 = new Thread(new Runnable() {
+
+            public void run() {
+                for (;;) {
+                    try {//500
+                        Thread.sleep(3000);
+                        moped.inditSzallitas();
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                     
+                }
+            }
+        });
+        t5.start();
 
 
     }

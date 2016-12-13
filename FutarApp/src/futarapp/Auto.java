@@ -1,59 +1,44 @@
 package futarapp;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.Timer;
 
 public class Auto extends Jarmu {
 
-    private BufferedImage image;
-    private int x = 0, y = 0;
+    private Pizzeria pizzeria;
+    private Rendelesek szallitasAlatt;
+    private boolean felvettRendeles;
+    private Benzinkutak benzinkutak;
     private String imageFile = "carleft_1.png";
     private String imageTop = "cartop_1.png";
     private String imageBot = "carbot_1.png";
     private String imageLeft = "carleft_1.png";
     private String imageRight = "carright_1.png";
-    private String marka;
-    private String tipus;
-    private int rakter;
-    private Pizzeria pizzeria;
-    private int position;
-    private Rendelesek szallitasAlatt;
-    private boolean felvettRendeles;
-    private double fogyasztas;
-    private double jelenlegiUzemanyag;
-    private Benzinkutak benzinkutak;
-    private int haladasiSebesseg;
-    private int segedHeight;
-    private int segedWidht;
 
     public Auto(String marka, String tipus) {
         super();
-try{
+        try {
             if (imageFile == null) {;
                 image = ImageIO.read(new File(imageFile));
             } else {
                 String ut = this.imageFile;
                 image = ImageIO.read(new File(ut));
             }
-   } catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "A(z) autó létrehozása nem sikerült !", "Hiba",
                     JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
-
         this.tipus = tipus;
         this.marka = marka;
         this.szallitasAlatt = new Rendelesek();
         this.felvettRendeles = false;
-        this.rakter = 5;
+        this.rakter = 7;
         this.fogyasztas = 0.5;
         this.jelenlegiUzemanyag = 50;
         this.haladasiSebesseg = 10;
@@ -62,7 +47,7 @@ try{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, x, y,this.getSegedWidht(),this.getSegedHeight(), null);
+        g.drawImage(image, x, y, this.getSegedWidht(), this.getSegedHeight(), null);
     }
 
     @Override
@@ -74,7 +59,7 @@ try{
                 String ut = this.imageFile;
                 image = ImageIO.read(new File(ut));
                 repaint();
-                        this.jelenlegiUzemanyag -= this.getFogyasztas()/this.getSegedHeight();
+                this.jelenlegiUzemanyag -= this.getFogyasztas() / this.getSegedHeight();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -97,7 +82,7 @@ try{
                     String ut = this.imageFile;
                     image = ImageIO.read(new File(ut));
                     repaint();
-                     this.jelenlegiUzemanyag -= this.getFogyasztas()/this.getSegedHeight();
+                    this.jelenlegiUzemanyag -= this.getFogyasztas() / this.getSegedHeight();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -119,7 +104,7 @@ try{
                     String ut = this.imageFile;
                     image = ImageIO.read(new File(ut));
                     repaint();
-                     this.jelenlegiUzemanyag -= this.getFogyasztas()/this.getSegedWidht();
+                    this.jelenlegiUzemanyag -= this.getFogyasztas() / this.getSegedWidht();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -140,7 +125,7 @@ try{
                 String ut = this.imageFile;
                 image = ImageIO.read(new File(ut));
                 repaint();
-                 this.jelenlegiUzemanyag -= this.getFogyasztas()/this.getSegedWidht();
+                this.jelenlegiUzemanyag -= this.getFogyasztas() / this.getSegedWidht();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -172,18 +157,19 @@ try{
     public void inditSzallitas() {
 
         if (pizzeria.getSzallitasraKesz().getMeret() != 0) {
-            while (felvettRendeles == false) {
-                this.setKezdoPont();
-                this.setVisible(true);
+            if (felvettRendeles == false) {
+
                 for (int i = 0; i < pizzeria.getSzallitasraKesz().getMeret(); i++) {
-                    if(szallitasAlatt.getMeret() < this.rakter){
-                    Rendeles ertek = pizzeria.getSzallitasraKesz().getRendeles(i);
-                    szallitasAlatt.addRendeles(ertek);
-                    pizzeria.getSzallitasAlatt().addRendeles(ertek);
-                    pizzeria.getSzallitasraKesz().removeRendeles(ertek);
+                    if (szallitasAlatt.getMeret() < this.rakter) {
+                        Rendeles ertek = pizzeria.getSzallitasraKesz().getRendeles(i);
+                        szallitasAlatt.addRendeles(ertek);
+                        pizzeria.getSzallitasAlatt().addRendeles(ertek);
+                        pizzeria.getSzallitasraKesz().removeRendeles(ertek);
                     }
                 }
                 felvettRendeles = true;
+                this.setKezdoPont();
+                this.setVisible(true);
 
                 for (int i = 0; i < this.getSzallitasAlatt().getMeret(); i++) {
                     Rendeles cel = this.legkozelebbiKeres();
@@ -192,8 +178,8 @@ try{
                     i--;
 
                 }
-                            this.menjHaza(this.getPizzeria().getPoz());
-            this.setVisible(false);
+                this.menjHaza(this.getPizzeria().getPoz());
+                this.setVisible(false);
             }
 
         }
@@ -243,44 +229,44 @@ try{
         boolean kesz = false;
 
         do {
-            if ( 30 > this.getJelenlegiUzemanyag()/this.fogyasztas) {
+            if (30 > this.getJelenlegiUzemanyag() / this.fogyasztas) {
                 this.tankol();
             }
-                // Ha elosztom protected-el és maradékos osztás protected ha páros ----> mehet fel-le!!!!
-                boolean vertikalis = false;
-                boolean horizontalis = false;
-                if ((this.position % Grid.OSZLOP) % 2 == 0) {
-                    if (this.position / Grid.OSZLOP <= poz / Grid.OSZLOP) {
-                        this.moveDown();
-                        vertikalis = true;
-                    } else if (this.position / Grid.OSZLOP > (poz / Grid.OSZLOP) + 1) {
-                        this.moveUp();
-                        vertikalis = true;
-                    }
+            // Ha elosztom protected-el és maradékos osztás protected ha páros ----> mehet fel-le!!!!
+            boolean vertikalis = false;
+            boolean horizontalis = false;
+            if ((this.position % Grid.OSZLOP) % 2 == 0) {
+                if (this.position / Grid.OSZLOP <= poz / Grid.OSZLOP) {
+                    this.moveDown();
+                    vertikalis = true;
+                } else if (this.position / Grid.OSZLOP > (poz / Grid.OSZLOP) + 1) {
+                    this.moveUp();
+                    vertikalis = true;
                 }
+            }
 
-                if (!vertikalis) {
-                    if (this.position % Grid.OSZLOP > poz % Grid.OSZLOP) {
-                        this.moveLeft();
-                        horizontalis = true;
-                    } else if (this.position % Grid.OSZLOP < poz % Grid.OSZLOP) {
-                        this.moveRight();
-                        horizontalis = true;
-                    }
-                }
-
-                if (this.position + Grid.OSZLOP == poz || this.position - Grid.OSZLOP == poz) {
-                    kesz = true;
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Auto.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-                if (!kesz && !vertikalis && !horizontalis) {
+            if (!vertikalis) {
+                if (this.position % Grid.OSZLOP > poz % Grid.OSZLOP) {
                     this.moveLeft();
+                    horizontalis = true;
+                } else if (this.position % Grid.OSZLOP < poz % Grid.OSZLOP) {
+                    this.moveRight();
+                    horizontalis = true;
                 }
+            }
+
+            if (this.position + Grid.OSZLOP == poz || this.position - Grid.OSZLOP == poz) {
+                kesz = true;
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Auto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (!kesz && !vertikalis && !horizontalis) {
+                this.moveLeft();
+            }
 
         } while (!kesz);
         rendeles.getLako().setRendelesreVar(false);
@@ -431,7 +417,5 @@ try{
     public void setSegedWidht(int segedWidht) {
         this.segedWidht = segedWidht;
     }
-    
-    
 
 }
