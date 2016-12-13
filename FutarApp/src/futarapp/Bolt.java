@@ -11,13 +11,12 @@ import javax.swing.JOptionPane;
 public class Bolt extends Epulet {
 
     private EpuletTipus tipus = EpuletTipus.Bolt;
-    private ImageIcon image;
     private ArrayList<Hozzavalo> aruk;
     private String imageFile;
     private BufferedImage imageB;
 
     public Bolt() {
-        this.imageFile = "tesco-icon.png";
+        this.imageFile = "tesco.png";
         this.aruk = new ArrayList<>();
 
         try {
@@ -32,7 +31,6 @@ public class Bolt extends Epulet {
                     JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
-        this.image = new ImageIcon(imageB);
     }
 
     public void addAru(Hozzavalo aru) {
@@ -66,10 +64,6 @@ public class Bolt extends Epulet {
         return this.tipus;
     }
 
-    @Override
-    public ImageIcon getImage() {
-        return this.image;
-    }
 
     @Override
     public void setPoz(int poz) {
@@ -79,6 +73,11 @@ public class Bolt extends Epulet {
     @Override
     public void setHazszam(int hazSzam) {
         this.hazszam = hazSzam;
+    }
+
+    @Override
+    public BufferedImage getImageB() {
+        return imageB;
     }
 
 }

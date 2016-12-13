@@ -31,6 +31,8 @@ public class Terkep {
         TerkepCont.setLayout(new GridLayout(Grid.SOR, Grid.OSZLOP));
         Terkep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        
+
         Pizzeria pizzeria = new Pizzeria();
         Benzinkut benzinkut = new Benzinkut(340, 355);
         Lakasok lakasok = new Lakasok();
@@ -70,6 +72,20 @@ public class Terkep {
         } while (randomSzam == pizzeriaSzam);
         int BenzinkutSzam = randomSzam;
         
+        for (int i = 0; i < Grid.SOR; i++) {
+                for (int j = 0; j < Grid.OSZLOP; j++) {
+                        JPanel panelblock = new JPanel();
+                        panelblock.setOpaque(true);
+                        panelblock.setBackground(Color.GRAY);
+                        TerkepCont.add(panelblock, i * Grid.OSZLOP + j);
+                }
+        }
+        Terkep.setVisible(true);
+        int segedWidth = TerkepCont.getComponent(0).getWidth();
+        int segedHeight = TerkepCont.getComponent(0).getHeight();
+        TerkepCont.removeAll();
+        Terkep.setVisible(false);
+        
         try {
             int lakasdarab = 1;
             for (int i = 0; i < Grid.SOR; i++) {
@@ -89,7 +105,9 @@ public class Terkep {
                         thumb.setVerticalTextPosition(JLabel.BOTTOM);
                         thumb.setHorizontalAlignment(JLabel.CENTER);
                         thumb.setBackground(Color.WHITE);
-                        thumb.setIcon(pizzeria.getImage());
+                             BufferedImage scaled = pizzeria.getImageB();
+                        TerkepCont.add(thumb, i * Grid.OSZLOP + j);
+                        thumb.setIcon(new ImageIcon(scaled.getScaledInstance((int) (segedWidth*0.75), (int) (segedHeight*0.75), 0)));
                         TerkepCont.add(thumb, i * Grid.OSZLOP + j);
                         lakasdarab++;
                     } else if (lakasdarab == BenzinkutSzam) {
@@ -102,11 +120,14 @@ public class Terkep {
                         thumb.setVerticalTextPosition(JLabel.BOTTOM);
                         thumb.setHorizontalAlignment(JLabel.CENTER);
                         thumb.setBackground(Color.WHITE);
-                        thumb.setIcon(benzinkut.getImage());
+                             BufferedImage scaled = benzinkut.getImageB();
+                        TerkepCont.add(thumb, i * Grid.OSZLOP + j);
+                        thumb.setIcon(new ImageIcon(scaled.getScaledInstance((int) (segedWidth*0.75), (int) (segedHeight*0.75), 0)));
                         TerkepCont.add(thumb, i * Grid.OSZLOP + j);
                         benzinkutak.addBenzinkut(benzinkut);
                         lakasdarab++;
                     } else {
+                        System.out.println("MÉRET"+ TerkepCont.getComponent(0).getHeight());
                         int lakokSzama = (int) (Math.random() * 15);
                         Lakas lakas = new Lakas(lakokSzama);
                         lakas.setHazszam(lakasdarab);
@@ -117,8 +138,9 @@ public class Terkep {
                         thumb.setVerticalTextPosition(JLabel.BOTTOM);
                         thumb.setBackground(Color.WHITE);
                         thumb.setOpaque(true);
+                        BufferedImage scaled = lakas.getImageB();
                         TerkepCont.add(thumb, i * Grid.OSZLOP + j);
-                        thumb.setIcon(lakas.getImage());
+                        thumb.setIcon(new ImageIcon(scaled.getScaledInstance((int) (segedWidth*0.75), (int) (segedHeight*0.75), 0)));
                         lakasdarab++;
                         lakas.setPoz(i * Grid.OSZLOP + j);
                         int eddigiLakok = 0;
@@ -256,6 +278,7 @@ public class Terkep {
                             TerkepCont.getComponent(lakasok.getLakas(i).getPoz()).setBackground(Color.white);
 
                         }
+
                     }
                     try {//1000
                         Thread.sleep(500);
@@ -271,8 +294,6 @@ public class Terkep {
 
             public void run() {
                 for (;;) {
-                    System.out.println(auto.getSegedHeight());
-                    System.out.println(auto.getSegedWidht());
                     auto.inditSzallitas();
                     try {//500
                         Thread.sleep(200);

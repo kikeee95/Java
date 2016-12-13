@@ -1,9 +1,13 @@
 package futarapp;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Pizzeria extends Epulet {
 
@@ -18,10 +22,24 @@ public class Pizzeria extends Epulet {
     private ArrayList<Dolgozo> dolgozok;
     private ArrayList<Etel> menu;
     private int kapacitas;
+    private BufferedImage imageB;
+    private String imageFile;
 
     public Pizzeria() {
         this.tipus = EpuletTipus.Pizzeria;
-        image = new ImageIcon("pizzeria.jpg");
+                this.imageFile = "pizza-icon.png";
+        try {
+            if (imageFile == null) {;
+                imageB = ImageIO.read(new File(imageFile));
+            } else {
+                String ut = this.imageFile;
+                imageB = ImageIO.read(new File(ut));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "A(z) pizzéria létrehozása nem sikerült !", "Hiba",
+                    JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        }
         this.kiszallitottPizzak = 0;
         this.osszBevetel = 0;
         this.jarmuvek = new ArrayList<>();
@@ -160,10 +178,6 @@ public class Pizzeria extends Epulet {
         return this.tipus;
     }
 
-    @Override
-    public ImageIcon getImage() {
-        return this.image;
-    }
 
     @Override
     public void setPoz(int poz) {
@@ -173,6 +187,11 @@ public class Pizzeria extends Epulet {
     @Override
     public void setHazszam(int hazSzam) {
         this.hazszam = hazSzam;
+    }
+
+    @Override
+    public BufferedImage getImageB() {
+        return imageB;
     }
 
 }

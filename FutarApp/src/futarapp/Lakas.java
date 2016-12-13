@@ -12,7 +12,6 @@ public class Lakas extends Epulet {
     private EpuletTipus tipus;
     private String imageFile;
     private BufferedImage imageB;
-    private ImageIcon image;
     private int lakokSzama;
     private ArrayList<Lako> lakok;
 
@@ -33,7 +32,7 @@ public class Lakas extends Epulet {
 
         } else {
             try {
-                imageFile = "apartment.png";
+                imageFile = "apartment-icon.png";
                 String ut = this.imageFile;
                 imageB = ImageIO.read(new File(ut));
 
@@ -43,7 +42,6 @@ public class Lakas extends Epulet {
                 System.exit(1);
             }
         }
-        this.image = new ImageIcon(imageB);
 
         this.lakokSzama = lakokSzama;
 
@@ -67,10 +65,6 @@ public class Lakas extends Epulet {
         return tipus;
     }
 
-    @Override
-    public ImageIcon getImage() {
-        return image;
-    }
 
     public int getLakokSzama() {
         return lakokSzama;

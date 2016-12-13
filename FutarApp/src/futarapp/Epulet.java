@@ -2,6 +2,7 @@
 
 package futarapp;
 
+import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 public abstract class Epulet{
@@ -22,6 +23,6 @@ public abstract class Epulet{
 
     public abstract EpuletTipus getTipus();
 
-    public abstract ImageIcon getImage();
+    public abstract  BufferedImage getImageB();
 
 }
