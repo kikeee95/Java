@@ -185,10 +185,14 @@ public class Terkep {
         pizzeria.addJarmu(auto);
         auto.setPizzeria(pizzeria);
         auto.setBenzinkutak(benzinkutak);
+        
+    
 
         auto.setOpaque(false);
 
         Terkep.setVisible(true);
+            auto.setSegedWidht(TerkepCont.getComponent(2).getWidth());
+        auto.setSegedHeight(TerkepCont.getComponent(2).getHeight());
 
         Thread t1 = new Thread(new Runnable() {
             public void run() {
@@ -262,11 +266,13 @@ public class Terkep {
             }
         });
         t4.start();
-
+        
         Thread t2 = new Thread(new Runnable() {
 
             public void run() {
                 for (;;) {
+                    System.out.println(auto.getSegedHeight());
+                    System.out.println(auto.getSegedWidht());
                     auto.inditSzallitas();
                     try {//500
                         Thread.sleep(200);
@@ -277,6 +283,8 @@ public class Terkep {
             }
         });
         t2.start();
+        
+
 
     }
 }

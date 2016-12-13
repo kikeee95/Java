@@ -31,6 +31,8 @@ public class Auto extends Jarmu {
     private double jelenlegiUzemanyag;
     private Benzinkutak benzinkutak;
     private int haladasiSebesseg;
+    private int segedHeight;
+    private int segedWidht;
 
     public Auto(String marka, String tipus) {
         super();
@@ -65,14 +67,14 @@ try{
 
     @Override
     public void moveDown() {
-        for (int i = 0; i < 69; i++) {
+        for (int i = 0; i < this.getSegedHeight(); i++) {
             try {
                 y++;
                 this.imageFile = imageBot;
                 String ut = this.imageFile;
                 image = ImageIO.read(new File(ut));
                 repaint();
-                        this.jelenlegiUzemanyag -= this.getFogyasztas()/69;
+                        this.jelenlegiUzemanyag -= this.getFogyasztas()/this.getSegedHeight();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -87,7 +89,7 @@ try{
 
     @Override
     public void moveUp() {
-        for (int i = 0; i < 69; i++) {
+        for (int i = 0; i < this.getSegedHeight(); i++) {
             try {
                 try {
                     y--;
@@ -95,7 +97,7 @@ try{
                     String ut = this.imageFile;
                     image = ImageIO.read(new File(ut));
                     repaint();
-                     this.jelenlegiUzemanyag -= this.getFogyasztas()/69;
+                     this.jelenlegiUzemanyag -= this.getFogyasztas()/this.getSegedHeight();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -109,7 +111,7 @@ try{
 
     @Override
     public void moveLeft() {
-        for (int i = 0; i < 63; i++) {
+        for (int i = 0; i < this.getSegedWidht(); i++) {
             try {
                 try {
                     x--;
@@ -117,7 +119,7 @@ try{
                     String ut = this.imageFile;
                     image = ImageIO.read(new File(ut));
                     repaint();
-                     this.jelenlegiUzemanyag -= this.getFogyasztas()/63;
+                     this.jelenlegiUzemanyag -= this.getFogyasztas()/this.getSegedWidht();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -131,14 +133,14 @@ try{
 
     @Override
     public void moveRight() {
-        for (int i = 0; i < 63; i++) {
+        for (int i = 0; i < this.getSegedWidht(); i++) {
             try {
                 x++;
                 this.imageFile = imageRight;
                 String ut = this.imageFile;
                 image = ImageIO.read(new File(ut));
                 repaint();
-                 this.jelenlegiUzemanyag -= this.getFogyasztas()/63;
+                 this.jelenlegiUzemanyag -= this.getFogyasztas()/this.getSegedWidht();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -360,8 +362,8 @@ try{
         int seged = this.pizzeria.getPoz();
         int Yeltol = seged / 15 + 1;
         int Xeltol = seged % 15;
-        this.x = Xeltol * 63;
-        this.y = Yeltol * 69;
+        this.x = Xeltol * this.getSegedWidht();
+        this.y = Yeltol * this.getSegedHeight();
         this.position = this.pizzeria.getPoz() + 15;
     }
 
@@ -413,5 +415,23 @@ try{
     public Rendelesek getSzallitasAlatt() {
         return szallitasAlatt;
     }
+
+    public int getSegedHeight() {
+        return segedHeight;
+    }
+
+    public void setSegedHeight(int segedHeight) {
+        this.segedHeight = segedHeight;
+    }
+
+    public int getSegedWidht() {
+        return segedWidht;
+    }
+
+    public void setSegedWidht(int segedWidht) {
+        this.segedWidht = segedWidht;
+    }
+    
+    
 
 }
