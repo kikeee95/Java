@@ -43,8 +43,8 @@ public class Etel {
         arKalk();
     }
     
-    public void getHozzavalo(int index){
-        this.hozzavalok.get(index);
+    public Hozzavalo getHozzavalo(int index){
+        return this.hozzavalok.get(index);
     }
 
     public ArrayList<Hozzavalo> getHozzavalok() {

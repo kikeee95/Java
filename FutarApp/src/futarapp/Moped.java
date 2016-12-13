@@ -38,10 +38,10 @@ public class Moped extends Jarmu {
         this.marka = marka;
         this.szallitasAlatt = new Rendelesek();
         this.felvettRendeles = false;
-        this.rakter = 7;
-        this.fogyasztas = 0.5;
-        this.jelenlegiUzemanyag = 50;
-        this.haladasiSebesseg = 10;
+        this.rakter = 3;
+        this.fogyasztas = 0.1;
+        this.jelenlegiUzemanyag = 20;
+        this.haladasiSebesseg = 15;
     }
 
     @Override

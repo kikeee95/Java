@@ -17,6 +17,10 @@ public class Rendeles {
         id++;
     }
     
+    public int getEtelSzam(){
+        return this.etelek.size();
+    }
+    
     public void addEtel(Etel etel){
         this.etelek.add(etel);
     }
@@ -58,7 +62,7 @@ public class Rendeles {
         StringBuffer sb = new StringBuffer("     HázSz.: " + hazSzam + "     Név: " + lako.getNev()+"\n     Ételek: ");
         for (Etel etel : etelek) {
             sb.append("     "+etel.getNev()+"\t");
-            sb.append("\n----------------------------------------------------------\n\n");
+            sb.append("\n----------------------------------------------------------");
         }
         return sb.toString();
     }

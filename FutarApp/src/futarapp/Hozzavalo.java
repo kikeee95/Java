@@ -3,36 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package futarapp;
 
 /**
- * 
+ *
  * @author Sammy Guergachi <sguergachi at gmail.com>
  */
 public class Hozzavalo {
+
     private String nev;
     private int egysegAr;
     private Afak afa;
+    private int db;
 
     public Hozzavalo(String nev, int egysegAr, int afa) throws Exception {
         this.nev = nev;
         this.egysegAr = egysegAr;
-        if(afa == 1){
+        if (afa == 1) {
             this.afa = Afak.KiemeltKevezmenyes;
-        }else if(afa == 2){
+        } else if (afa == 2) {
             this.afa = Afak.Kedvezmenyes;
-        }else if(afa == 3){
+        } else if (afa == 3) {
             this.afa = Afak.Normal;
-        }else{
+        } else {
             throw new Exception("Hibás áfatípus!");
         }
     }
-    
-      public Hozzavalo(String nev, int egysegAr, Afak afa) {
+
+    public Hozzavalo(String nev, int egysegAr, Afak afa) {
         this.nev = nev;
         this.egysegAr = egysegAr;
-        this.afa=afa;
+        this.afa = afa;
     }
 
     public String getNev() {
@@ -58,6 +59,18 @@ public class Hozzavalo {
     public void setAfa(Afak afa) {
         this.afa = afa;
     }
-    
-    
+
+    public int getDb() {
+        return db;
+    }
+
+    public void setDb(int db) {
+        this.db = db;
+    }
+
+    @Override
+    public String toString() {
+        return "   " + this.nev + " \t\t\t" + this.db;
+    }
+
 }

@@ -204,18 +204,14 @@ public class Terkep {
                     JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
-       Glass.add(moped);
-       Glass.add(auto);
+        Glass.add(moped);
+        Glass.add(auto);
         Glass.setLayout(new OverlayLayout(Glass));
-
-
-               Terkep.setGlassPane(Glass);
-
-
-       Glass.setVisible(true);
-       auto.setVisible(false);
-       moped.setVisible(false);
-       Glass.setOpaque(false);
+        Terkep.setGlassPane(Glass);
+        Glass.setVisible(true);
+        moped.setVisible(false);
+        auto.setVisible(false);
+        Glass.setOpaque(false);
         Terkep.setVisible(true);
         pizzeria.addJarmu(moped);
         moped.setPizzeria(pizzeria);
@@ -230,6 +226,9 @@ public class Terkep {
         auto.setSegedHeight(TerkepCont.getComponent(2).getHeight());
         moped.setSegedWidht(TerkepCont.getComponent(2).getWidth());
         moped.setSegedHeight(TerkepCont.getComponent(2).getHeight());
+
+        pizzeria.setKeszlet();
+        System.out.println(pizzeria.getKeszlet());
 
         Thread t1 = new Thread(new Runnable() {
             public void run() {
@@ -251,7 +250,9 @@ public class Terkep {
                                 felulet.Textarea3(pizzeria.getSzallitasAlatt());
                                 felulet.JLabel5(pizzeria.getKiszallitottPizzak());
                                 felulet.JLabel7(auto);//1000
-                                                    Glass.repaint();
+                                felulet.JLabel8(moped);
+                                felulet.JTextArea5(pizzeria);
+                                Glass.repaint();
 
                                 Thread.sleep(100);
                             }
@@ -303,8 +304,6 @@ public class Terkep {
             }
         });
         t4.start();
-        
-
 
         Thread t2 = new Thread(new Runnable() {
 
@@ -312,7 +311,7 @@ public class Terkep {
                 for (;;) {
                     try {//500
                         Thread.sleep(2000);
-                                            auto.inditSzallitas();
+                        auto.inditSzallitas();
 
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
@@ -321,8 +320,8 @@ public class Terkep {
             }
         });
         t2.start();
-        
-             Thread t5 = new Thread(new Runnable() {
+
+        Thread t5 = new Thread(new Runnable() {
 
             public void run() {
                 for (;;) {
@@ -332,12 +331,11 @@ public class Terkep {
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
-                     
+
                 }
             }
         });
         t5.start();
-
 
     }
 }
