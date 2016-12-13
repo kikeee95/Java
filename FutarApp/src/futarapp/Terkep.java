@@ -299,9 +299,21 @@ public class Terkep {
 
                             Rendeles ujRendeles = new Rendeles(lakasok.getLakas(LakasRand).getHazszam(), lakasok.getLakas(LakasRand).getLakok().get(LakoRand));
                             lakasok.getLakas(LakasRand).getLako(LakoRand).setRendelesreVar(true);
-                            ujRendeles.addEtel(pizzeria.getMenu().get((int) (Math.random() * pizzeria.getMenu().size())));
+                            int etelRand = (int) (Math.random() * 100);
+                            int etelDB = 0;
+                            if (etelRand < 80) {
+                                etelDB = 1;
+                            } else {
+                                etelDB = (int) (Math.random() * 2) + 2;
+                            }
+
+                            for (int i = 0; i < etelDB; i++) {
+                                ujRendeles.addEtel(pizzeria.getMenu().get((int) (Math.random() * pizzeria.getMenu().size())));
+                            }
+
                             pizzeria.getElkeszitesreVaro().addRendeles(ujRendeles);
                         }
+
                         felulet.Textarea1(pizzeria.getElkeszitesreVaro());
                         felulet.Textarea2(pizzeria.getKeszitesAlatt());
                         felulet.Textarea4(pizzeria.getSzallitasraKesz());

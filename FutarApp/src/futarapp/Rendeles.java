@@ -62,8 +62,8 @@ public class Rendeles {
         StringBuffer sb = new StringBuffer("     HázSz.: " + hazSzam + "     Név: " + lako.getNev()+"\n     Ételek: ");
         for (Etel etel : etelek) {
             sb.append("     "+etel.getNev()+"\t");
-            sb.append("\n----------------------------------------------------------");
         }
+        sb.append("\n----------------------------------------------------------");
         return sb.toString();
     }
     
