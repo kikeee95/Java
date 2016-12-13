@@ -27,6 +27,7 @@ public class Pizzeria extends Epulet {
     private BufferedImage imageB;
     private String imageFile;
     private HashSet<Hozzavalo> keszlet;
+    private Szallito szallito;
 
     public Pizzeria() {
         this.tipus = EpuletTipus.Pizzeria;
@@ -64,7 +65,7 @@ public class Pizzeria extends Epulet {
 
         try {
             sutobeTesz();//15000
-            Thread.sleep(5000);
+            Thread.sleep(15000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Pizzeria.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,6 +82,13 @@ public class Pizzeria extends Epulet {
     }
 
     public void sutobeTesz() {
+        
+        for(Hozzavalo hozzavalo: keszlet){
+                if(hozzavalo.getDb() < 15){
+                    this.szallito.vasarol();
+                    break;
+                }
+            }
 
         for (int i = 0; i < elkeszitesreVaro.getMeret(); i++) {
             int db = 0;
@@ -239,5 +247,15 @@ public class Pizzeria extends Epulet {
             }
         }
     }
+
+    public Szallito getSzallito() {
+        return szallito;
+    }
+
+    public void setSzallito(Szallito szallito) {
+        this.szallito = szallito;
+    }
+    
+    
 
 }

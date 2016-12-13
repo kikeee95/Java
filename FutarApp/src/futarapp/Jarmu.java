@@ -26,10 +26,5 @@ public abstract class Jarmu extends JPanel {
 
     public abstract void moveRight();
 
-    public abstract void tankol();
-
-    public abstract void szallit(Rendeles rendeles, int poz);
-
-    public abstract void vasarol();
 
 }

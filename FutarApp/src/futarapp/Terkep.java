@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.*;
 
@@ -34,10 +36,10 @@ public class Terkep {
         Terkep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Pizzeria pizzeria = new Pizzeria();
+        Bolt bolt = new Bolt();
         Benzinkut benzinkut = new Benzinkut(340, 355);
         Lakasok lakasok = new Lakasok();
         Benzinkutak benzinkutak = new Benzinkutak();
-        Bolt bolt = new Bolt();
 
         String csvFile = "alapanyagok.csv";
         String csvFile2 = "menu.csv";
@@ -71,6 +73,11 @@ public class Terkep {
             randomSzam = (int) (Math.random() * ((Grid.SOR / 2 * Grid.OSZLOP)) / 2);
         } while (randomSzam == pizzeriaSzam);
         int BenzinkutSzam = randomSzam;
+
+        do {
+            randomSzam = (int) (Math.random() * ((Grid.SOR / 2 * Grid.OSZLOP)) / 2);
+        } while (randomSzam == pizzeriaSzam || randomSzam == BenzinkutSzam);
+        int boltSzam = randomSzam;
 
         for (int i = 0; i < Grid.SOR; i++) {
             for (int j = 0; j < Grid.OSZLOP; j++) {
@@ -126,6 +133,21 @@ public class Terkep {
                         TerkepCont.add(thumb, i * Grid.OSZLOP + j);
                         benzinkutak.addBenzinkut(benzinkut);
                         lakasdarab++;
+                    } else if (lakasdarab == boltSzam) {
+                        bolt.setHazszam(lakasdarab);
+                        bolt.setPoz(i * Grid.OSZLOP + j);
+                        JLabel thumb = new JLabel();
+                        thumb.setText("" + lakasdarab);
+                        thumb.setHorizontalAlignment(JLabel.CENTER);
+                        thumb.setHorizontalTextPosition(JLabel.CENTER);
+                        thumb.setVerticalTextPosition(JLabel.BOTTOM);
+                        thumb.setHorizontalAlignment(JLabel.CENTER);
+                        thumb.setBackground(Color.WHITE);
+                        BufferedImage scaled = bolt.getImageB();
+                        TerkepCont.add(thumb, i * Grid.OSZLOP + j);
+                        thumb.setIcon(new ImageIcon(scaled.getScaledInstance((int) (segedWidth * 0.75), (int) (segedHeight * 0.75), 0)));
+                        TerkepCont.add(thumb, i * Grid.OSZLOP + j);
+                        lakasdarab++;
                     } else {
                         System.out.println("MÉRET" + TerkepCont.getComponent(0).getHeight());
                         int lakokSzama = (int) (Math.random() * 15);
@@ -171,6 +193,7 @@ public class Terkep {
                     JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
+
         try {
             BufferedReader br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine()) != null) {
@@ -183,6 +206,7 @@ public class Terkep {
             JOptionPane.showMessageDialog(null, "A(z) " + csvFile + " fájlt nem lehetett megnyitni!", "Hiba",
                     JOptionPane.ERROR_MESSAGE);
         }
+
         try {
             BufferedReader br2 = new BufferedReader(new FileReader(csvFile2));
             while ((line = br2.readLine()) != null) {
@@ -204,67 +228,100 @@ public class Terkep {
                     JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
-        Glass.add(moped);
-        Glass.add(auto);
-        Glass.setLayout(new OverlayLayout(Glass));
-        Terkep.setGlassPane(Glass);
-        Glass.setVisible(true);
-        moped.setVisible(false);
-        auto.setVisible(false);
-        Glass.setOpaque(false);
-        Terkep.setVisible(true);
-        pizzeria.addJarmu(moped);
-        moped.setPizzeria(pizzeria);
-        moped.setBenzinkutak(benzinkutak);
-        pizzeria.addJarmu(auto);
-        auto.setPizzeria(pizzeria);
-        auto.setBenzinkutak(benzinkutak);
-        auto.setOpaque(false);
-        moped.setOpaque(false);
 
+        Glass.add(moped);
+
+        Glass.add(auto);
+
+        Glass.setLayout(
+                new OverlayLayout(Glass));
+        Terkep.setGlassPane(Glass);
+
+        Glass.setVisible(
+                true);
+        moped.setVisible(
+                false);
+        auto.setVisible(
+                false);
+        Glass.setOpaque(
+                false);
+        Terkep.setVisible(
+                true);
+        pizzeria.addJarmu(moped);
+
+        moped.setPizzeria(pizzeria);
+
+        moped.setBenzinkutak(benzinkutak);
+
+        pizzeria.addJarmu(auto);
+
+        auto.setPizzeria(pizzeria);
+
+        auto.setBenzinkutak(benzinkutak);
+
+        auto.setOpaque(
+                false);
+        moped.setOpaque(
+                false);
+
+        Szallito szallito = new Szallito("Volvo", "nagy");
+
+        pizzeria.setSzallito(szallito);
+
+        szallito.setPizzeria(pizzeria);
+
+        szallito.setBolt(bolt);
+
+        Glass.add(szallito);
+        szallito.setVisible(false);
+        szallito.setOpaque(false);
+
+        szallito.setSegedWidht(TerkepCont.getComponent(2).getWidth());
+        szallito.setSegedHeight(TerkepCont.getComponent(2).getHeight());
         auto.setSegedWidht(TerkepCont.getComponent(2).getWidth());
         auto.setSegedHeight(TerkepCont.getComponent(2).getHeight());
         moped.setSegedWidht(TerkepCont.getComponent(2).getWidth());
         moped.setSegedHeight(TerkepCont.getComponent(2).getHeight());
 
         pizzeria.setKeszlet();
+
         System.out.println(pizzeria.getKeszlet());
 
         Thread t1 = new Thread(new Runnable() {
             public void run() {
                 for (;;) {
+
                     try {
-                        for (int i = 0; i < lakasok.getMeret(); i++) {
-                            for (int j = 0; j < lakasok.getLakas(i).getLakokSzama(); j++) {
-                                int RendelesRand = (int) (Math.random() * 100);
-                                if (RendelesRand <= lakasok.getLakas(i).getLakok().get(j).getPizzaSzeretet()) {
+                        int LakasRand = (int) (Math.random() * lakasok.getMeret());
+                        int RendelesRand = (int) (Math.random() * 100);
+                        int LakoRand = (int) (Math.random() * lakasok.getLakas(LakasRand).getLakokSzama());
+                        if (RendelesRand <= lakasok.getLakas(LakasRand).getLakok().get(LakoRand).getPizzaSzeretet()) {
 
-                                    Rendeles ujRendeles = new Rendeles(lakasok.getLakas(i).getHazszam(), lakasok.getLakas(i).getLakok().get(j));
-                                    lakasok.getLakas(i).getLako(j).setRendelesreVar(true);
-                                    ujRendeles.addEtel(pizzeria.getMenu().get((int) (Math.random() * pizzeria.getMenu().size())));
-                                    pizzeria.getElkeszitesreVaro().addRendeles(ujRendeles);
-                                }
-                                felulet.Textarea1(pizzeria.getElkeszitesreVaro());
-                                felulet.Textarea2(pizzeria.getKeszitesAlatt());
-                                felulet.Textarea4(pizzeria.getSzallitasraKesz());
-                                felulet.Textarea3(pizzeria.getSzallitasAlatt());
-                                felulet.JLabel5(pizzeria.getKiszallitottPizzak());
-                                felulet.JLabel7(auto);//1000
-                                felulet.JLabel8(moped);
-                                felulet.JTextArea5(pizzeria);
-                                Glass.repaint();
-
-                                Thread.sleep(100);
-                            }
+                            Rendeles ujRendeles = new Rendeles(lakasok.getLakas(LakasRand).getHazszam(), lakasok.getLakas(LakasRand).getLakok().get(LakoRand));
+                            lakasok.getLakas(LakasRand).getLako(LakoRand).setRendelesreVar(true);
+                            ujRendeles.addEtel(pizzeria.getMenu().get((int) (Math.random() * pizzeria.getMenu().size())));
+                            pizzeria.getElkeszitesreVaro().addRendeles(ujRendeles);
                         }
+                        felulet.Textarea1(pizzeria.getElkeszitesreVaro());
+                        felulet.Textarea2(pizzeria.getKeszitesAlatt());
+                        felulet.Textarea4(pizzeria.getSzallitasraKesz());
+                        felulet.Textarea3(pizzeria.getSzallitasAlatt());
+                        felulet.JLabel5(pizzeria.getKiszallitottPizzak());
+                        felulet.JLabel7(auto);//1000
+                        felulet.JLabel8(moped);
+                        felulet.JTextArea5(pizzeria);
+                        Glass.repaint();
 
+                        Thread.sleep(500);
                     } catch (InterruptedException ex) {
-                        ex.printStackTrace();
+                        Logger.getLogger(Terkep.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
             }
-        });
+        }
+        );
+
         t1.start();
 
         Thread t3 = new Thread(new Runnable() {
@@ -275,6 +332,7 @@ public class Terkep {
                 }
             }
         });
+
         t3.start();
 
         Thread t4 = new Thread(new Runnable() {
@@ -296,13 +354,14 @@ public class Terkep {
 
                     }
                     try {//1000
-                        Thread.sleep(500);
+                        Thread.sleep(100);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
                 }
             }
         });
+
         t4.start();
 
         Thread t2 = new Thread(new Runnable() {
@@ -319,6 +378,7 @@ public class Terkep {
                 }
             }
         });
+
         t2.start();
 
         Thread t5 = new Thread(new Runnable() {
@@ -335,6 +395,7 @@ public class Terkep {
                 }
             }
         });
+
         t5.start();
 
     }

@@ -30,7 +30,7 @@ public class Moped extends Jarmu {
                 image = ImageIO.read(new File(ut));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "A(z) mpped létrehozása nem sikerült !", "Hiba",
+            JOptionPane.showMessageDialog(null, "A(z) moped létrehozása nem sikerült !", "Hiba",
                     JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
@@ -39,7 +39,7 @@ public class Moped extends Jarmu {
         this.szallitasAlatt = new Rendelesek();
         this.felvettRendeles = false;
         this.rakter = 3;
-        this.fogyasztas = 0.1;
+        this.fogyasztas = 0.2;
         this.jelenlegiUzemanyag = 20;
         this.haladasiSebesseg = 15;
     }
@@ -318,14 +318,13 @@ public class Moped extends Jarmu {
 
     }
 
-    @Override
     public void tankol() {
         boolean message = false;
         this.menjHaza(this.benzinkutKeres(this.benzinkutak).getPoz());
         if (message == false) {
             Thread t = new Thread(new Runnable() {
                 public void run() {
-                    JOptionPane.showMessageDialog(null, "Az autó éppen tankol");
+                    JOptionPane.showMessageDialog(null, "A moped éppen tankol");
                 }
             });
             t.start();
@@ -333,7 +332,7 @@ public class Moped extends Jarmu {
 
         }
 
-        while (this.getJelenlegiUzemanyag() < 50) {
+        while (this.getJelenlegiUzemanyag() < 20) {
 
             this.setJelenlegiUzemanyag(this.getJelenlegiUzemanyag() + 1);
             try {
@@ -361,7 +360,6 @@ public class Moped extends Jarmu {
         this.benzinkutak = benzinkutak;
     }
 
-    @Override
     public void vasarol() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

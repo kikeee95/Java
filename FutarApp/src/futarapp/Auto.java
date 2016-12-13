@@ -318,7 +318,6 @@ public class Auto extends Jarmu {
 
     }
 
-    @Override
     public void tankol() {
         boolean message = false;
         this.menjHaza(this.benzinkutKeres(this.benzinkutak).getPoz());
@@ -361,7 +360,6 @@ public class Auto extends Jarmu {
         this.benzinkutak = benzinkutak;
     }
 
-    @Override
     public void vasarol() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
